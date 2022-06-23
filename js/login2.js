@@ -132,7 +132,7 @@ function login() {
             /**redirigimos a sitio */
             setTimeout(() => {
                 ocultarErrDato()
-                window.location='http://127.0.0.1:5500/login_register/index.html'
+                window.location='https://karinaesquivele.github.io/pruebarepo-login/'
             }, 3000);
         } else {
             /**lanzamos mensaje de comparación */
