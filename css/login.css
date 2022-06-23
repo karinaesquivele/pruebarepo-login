@@ -1,0 +1,65 @@
+body {
+    background: rgb(224, 224, 224);
+}
+section {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    height: 100vh;
+}
+.contenedor{
+    max-width: 500px;
+    margin: auto;
+    padding: 20px 20px;
+    background: white;
+    border-radius: 10px;
+    text-align: center;
+    width: 35%;
+}
+button{
+    border: none;
+    background: rgb(24, 24, 24);
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+button:hover{
+    background: rgb(44, 44, 44);
+}
+input{
+    border: none;
+    border-bottom: 2px solid gray;
+    outline: 0;
+}
+input:focus{
+    border-bottom: 2px solid rgb(252, 217, 23);
+}
+
+/*clases msjs error*/
+.error {
+    color: rgb(177, 70, 70);
+    font-size: 13px;
+}
+.input-error{
+    border-bottom: 2px solid rgb(177, 70, 70);
+}
+.input-error:focus{
+    border-bottom: 2px solid rgb(177, 70, 70);
+}
+.comprobando {
+    color: gray;
+    margin-top: 10px;
+}
+/*Responsivo*/
+@media (max-width:991px){
+    .contenedor{
+        width: 45%;
+    }
+}
+
+@media (max-width:767px){
+    .contenedor{
+        width: 65%;
+    }
+}

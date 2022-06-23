@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .error {
+            color: rgb(139, 35, 35);
+            font-size: 14px;
+        }
+
+        .enviado {
+            color: rgb(88, 189, 88);
+        }
+
+        .enviando {
+            color: gray;
+        }
+    </style>
+</head>
+
+<body>
+    <section>
+        <h1>Registro</h1>
+        <form>
+            <label for="nombre">Nombre</label>
+            <input type="text" name="nombre" id="nombre"><br>
+            <div class="nombre">
+                <span class="error"></span>
+            </div>
+            <br><br>
+            <label for="apellido">Apellidos</label>
+            <input type="apellido" name="apellido" id="apellido"><br>
+            <div class="apellido">
+                <span class="error"></span>
+            </div>
+            <br><br>
+
+            <label for="tel">Teléfono</label>
+            <input type="number" id="tel" name="tel"><br>
+            <div class="tel">
+                <span class="error"></span>
+            </div>
+            <br><br>
+
+            <label for="email">Correo electrónico</label>
+            <input type="email" name="email" id="email"><br>
+            <div class="email">
+                <span class="error"></span>
+            </div>
+            <br><br>
+        </form>
+        <button class="btn">Enviar</button>
+        <div class="status">
+        </div>
+        <div class="btn-error">
+            <span class="error"></span>
+        </div>
+    </section>
+</body>
+
+</html>
+<script>
+    /*Variables generales*/
+    var btn = document.querySelector('.btn');
+    var errBtn = document.querySelector('.btn-error span')
+    var statusInfo = document.querySelector('.status')
+
+    /*var inputs*/
+    var nombre = document.getElementById('nombre');
+    var errNombre = document.querySelector('.nombre span');
+
+    var apellido = document.getElementById('apellido');
+    var errApellido = document.querySelector('.apellido span');
+
+    var email = document.getElementById('email');
+    var errEmail = document.querySelector('.email span');
+
+    var tel = document.getElementById('tel');
+    var errTel = document.querySelector('.tel span');
+
+
+    var validName = /^[a-zA-ZÑñÁáÉéÍíÓóÚúÜü\s]+$/;
+    var validTel = /[0-9]/;
+    var validEmail = /^\w+@(\w+\.)+\w{2,4}$/;
+
+    function mostrarError(elem,msj){
+        elem.innerHTML= '';
+        elem.innerHTML= msj;
+        btn.disabled = true;
+    }
+
+    function ocultarError(elem){
+        elem.innerHTML= '';
+        btn.disabled = false;
+    }
+
+    function validarNombre() {
+        if (nombre.value == '' || nombre.value.length < 3) {
+            mostrarError(errNombre,'El campo debe tener al menos 3 caracteres');
+            return false;
+        } else {
+            if (validName.test(nombre.value)) {
+               ocultarError(errNombre);
+               return true;
+            } else {
+                mostrarError(errNombre,'Ingrese un nombre válido');
+                return false;
+            }
+        }
+    }
+    function validarApellido() {
+        if (apellido.value == '' || apellido.value.length < 3) {
+            mostrarError(errApellido,'El campo debe tener al menos 3 caracteres');
+            return false
+        } else {
+            if (validName.test(apellido.value)) {
+               ocultarError(errApellido);
+               return true
+            } else {
+                mostrarError(errApellido,'Ingrese un nombre válido');
+                return false
+            }
+        }
+    }
+
+    function validarEmail() {
+        if (email.value == '') {
+            mostrarError(errEmail,'Este campo debe de ser llenado')
+            return false
+        } else {
+            if (validEmail.test(email.value)) {
+                ocultarError(errEmail);
+                return true
+            } else {
+                mostrarError(errEmail,'Correo electrónico inválido')
+                return false
+            }
+        }
+    }
+    function delimitarTel(num,inp){
+        if(inp.value.length>num){
+            inp.value = inp.value.slice(0,num)
+        }
+
+    }
+    function validarTel(){
+        if(tel.value==''){
+            mostrarError(errTel,'Este campo debe de ser llenado');
+            return false
+        }else{
+            delimitarTel(10,tel)
+            ocultarError(errTel);
+            return true
+        }
+    }
+    function comprobarValidaciones(){
+        if(validarNombre() && validarApellido() && validarEmail()&& validarTel()){
+            return true
+        }else{
+            validarNombre()
+            validarApellido()
+            validarEmail()
+            validarTel()
+            return false
+        }
+    }
+    function limpiarForm(){
+        nombre.value=''
+        apellido.value=''
+        tel.value=''
+        email.value=''
+    }
+    function enviarInfo(){
+        if(comprobarValidaciones()){
+            ocultarError(errBtn);
+            setTimeout(() => {
+                statusInfo.innerHTML='<span class="enviando">Enviando...</span>'
+            }, 300);
+            setTimeout(() => {
+                statusInfo.innerHTML='<span class="enviado">Enviando!</span>'
+            }, 2000);
+            setTimeout(() => {
+                statusInfo.innerHTML=''
+                limpiarForm()
+            }, 3000);
+        }else{
+            mostrarError(errBtn,'Completar los campos correspondientes')
+        }
+    }
+
+    nombre.addEventListener("keyup", validarNombre, false);
+    apellido.addEventListener("keyup", validarApellido, false);
+    email.addEventListener("keyup", validarEmail, false);
+    tel.addEventListener("keyup",validarTel,false);
+    
+    btn.addEventListener("click",enviarInfo,false);
+
+</script>
